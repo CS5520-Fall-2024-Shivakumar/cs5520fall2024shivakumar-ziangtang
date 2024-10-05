@@ -1,35 +1,3 @@
-<!--<androidx.constraintlayout.widget.ConstraintLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-
-<!--    &lt;!&ndash; Button definitions first to avoid referencing issues &ndash;&gt;-->
-<!--    <Button-->
-<!--        android:id="@+id/button1"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="1"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/text_calc"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-<!--    &lt;!&ndash; Repeat other buttons here &ndash;&gt;-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/text_calc"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="CALC"-->
-<!--        android:textSize="24sp"-->
-<!--        android:gravity="center"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/button1" />-->
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -221,10 +189,14 @@
 
     <Button
         android:id="@+id/button_delete"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="delete"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/light_blue"
         app:layout_constraintTop_toBottomOf="@id/button_equals"
-        app:layout_constraintStart_toEndOf="@id/button0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
