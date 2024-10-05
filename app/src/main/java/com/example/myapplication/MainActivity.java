@@ -3,6 +3,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.content.Intent;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,5 +26,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Ziang Tang - tang.zia@northeastern.edu", Toast.LENGTH_LONG).show();
             }
         });
+
+// assignment 3 button
+        Button quickCalcButton = findViewById(R.id.button_quick_calc);
+        quickCalcButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CalculatorActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
