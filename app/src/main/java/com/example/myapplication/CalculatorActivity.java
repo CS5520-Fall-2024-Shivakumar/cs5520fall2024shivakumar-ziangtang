@@ -5,9 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import java.util.Stack;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -26,7 +24,6 @@ public class CalculatorActivity extends AppCompatActivity {
         setupOperatorButtons();
         setupSpecialButtons();
     }
-
 
     private void setupNumberButtons() {
         // Number 0-9
@@ -68,13 +65,13 @@ public class CalculatorActivity extends AppCompatActivity {
         equalsButton.setOnClickListener(v -> evaluateExpression());
     }
 
-    // calculator core
+    // Append to the current expression
     private void appendToExpression(String value) {
         expression.append(value);
         calcText.setText(expression.toString());
     }
 
-    // evaluate the current expression
+    // Evaluate the current expression
     private void evaluateExpression() {
         try {
             double result = evaluateSimpleExpression(expression.toString());
@@ -86,20 +83,84 @@ public class CalculatorActivity extends AppCompatActivity {
         }
     }
 
-    // This is a simple calculator
+    // Evaluate the mathematical expression with operator precedence
     private double evaluateSimpleExpression(String expr) throws Exception {
+        expr = expr.replace("x", "*");
 
-        if (expr.contains("+")) {
-            String[] operands = expr.split("\\+");
-            return Double.parseDouble(operands[0]) + Double.parseDouble(operands[1]);
-        } else if (expr.contains("-")) {
-            String[] operands = expr.split("-");
-            return Double.parseDouble(operands[0]) - Double.parseDouble(operands[1]);
-        } else if (expr.contains("x")) {
-            String[] operands = expr.split("x");
-            return Double.parseDouble(operands[0]) * Double.parseDouble(operands[1]);
-        } else {
-            throw new Exception("Invalid Expression");
+        Stack<Double> numbers = new Stack<>();
+        Stack<Character> operators = new Stack<>();
+        int i = 0;
+
+        while (i < expr.length()) {
+            char currentChar = expr.charAt(i);
+
+            if (currentChar == ' ') {
+                i++;
+                continue;
+            }
+
+            if (Character.isDigit(currentChar) || currentChar == '-') {
+                StringBuilder sb = new StringBuilder();
+
+                if (currentChar == '-') {
+                    sb.append(currentChar);
+                    i++;
+                    currentChar = expr.charAt(i);
+                }
+
+                while (i < expr.length() && (Character.isDigit(currentChar) || currentChar == '.')) {
+                    sb.append(currentChar);
+                    i++;
+                    if (i < expr.length()) {
+                        currentChar = expr.charAt(i);
+                    }
+                }
+
+                numbers.push(Double.parseDouble(sb.toString()));
+                continue;
+            }
+
+            if (currentChar == '+' || currentChar == '-' || currentChar == '*' || currentChar == '/') {
+                while (!operators.isEmpty() && hasPrecedence(currentChar, operators.peek())) {
+                    numbers.push(applyOperator(operators.pop(), numbers.pop(), numbers.pop()));
+                }
+                operators.push(currentChar);
+            }
+
+            i++;
         }
+
+        while (!operators.isEmpty()) {
+            numbers.push(applyOperator(operators.pop(), numbers.pop(), numbers.pop()));
+        }
+
+        return numbers.pop();
+    }
+
+    private boolean hasPrecedence(char op1, char op2) {
+        if (op2 == '(' || op2 == ')') {
+            return false;
+        }
+        if ((op1 == '*' || op1 == '/') && (op2 == '+' || op2 == '-')) {
+            return false;
+        }
+        return true;
+    }
+
+    private double applyOperator(char operator, double b, double a) throws Exception {
+        switch (operator) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                if (b == 0) {
+                    throw new Exception("Division by zero");
+                }
+                return a / b;
+        }
+        return 0;
     }
 }
