@@ -25,6 +25,7 @@ public class ContactsCollectorActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView_contacts);
         FloatingActionButton fabAddContact = findViewById(R.id.fab_add_contact);
 
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         contactAdapter = new ContactAdapter(this, contactList);
         recyclerView.setAdapter(contactAdapter);
