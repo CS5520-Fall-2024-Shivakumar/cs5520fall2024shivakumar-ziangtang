@@ -18,14 +18,15 @@ public class MainActivity extends AppCompatActivity {
         // About Me button
         Button aboutMeButton = findViewById(R.id.button);
 
-        // Set onClickListener
         aboutMeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Display my name and email
-                Toast.makeText(MainActivity.this, "Ziang Tang - tang.zia@northeastern.edu", Toast.LENGTH_LONG).show();
+                // Start the AboutMeActivity instead of showing a Toast
+                Intent intent = new Intent(MainActivity.this, AboutMeActivity.class);
+                startActivity(intent);
             }
         });
+
 
 // assignment 3 button
         Button quickCalcButton = findViewById(R.id.button_quick_calc);
@@ -33,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, CalculatorActivity.class);
             startActivity(intent);
         });
+
+
+//        assignment 4 button
+        Button contactsCollectorButton = findViewById(R.id.button_contacts_collector);
+        contactsCollectorButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ContactsCollectorActivity.class);
+            startActivity(intent);
+        });
+
 
     }
 }
